@@ -1,0 +1,15 @@
+    Rofi
+    sudo pacman -S rofi
+    rofi-theme-selector (escolher um tema)
+
+    Energia, suspensão
+    sudo pacman -S xfce4-power-manager
+
+    Wallpaper, utilizo feh
+    sudo pacman -S feh
+
+    Barra, utilizo bumblebee-status
+    yay -S bumblebee-status –noconfirm
+
+    Também utilizo o ferdium como centralizador de webapps
+    yay -S ferdium-bin –noconfirm
