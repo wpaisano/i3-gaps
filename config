@@ -1,0 +1,314 @@
+# Este arquivo foi gerado automaticamente pelo i3-config-wizard(1).
+# Ele não será sobrescrito, então edite como quiser.
+#
+# Se você mudar o layout do seu teclado, delete
+# este arquivo e execute novamente o i3-config-wizard(1).
+#
+
+# Arquivo de configuração do i3 (v4)
+#
+# Veja https://i3wm.org/docs/userguide.html para uma referência completa!
+
+##################################
+############# MODKEY #############
+##################################
+
+# Define a tecla modificadora como Alt (Mod1)
+set $mod Mod1
+
+# Fonte para títulos das janelas. Também será usada pela barra, a menos que uma fonte diferente
+# seja usada no bloco de configuração da barra {} abaixo.
+#font pango:monospace 10
+
+# Esta fonte é amplamente instalada, fornece muitos glifos unicode, renderização de texto
+# da direita para a esquerda e escalabilidade em telas retina/hidpi (graças ao pango).
+
+##################################
+############# FONTS ##############
+##################################
+
+# Define a fonte a ser usada
+font pango:Inconsolata for Powerline 12
+
+# Inicia arquivos .desktop de autostart do XDG usando dex. Veja também
+# https://wiki.archlinux.org/index.php/XDG_Autostart
+exec --no-startup-id dex --autostart --environment i3
+
+# A combinação de xss-lock, nm-applet e pactl é uma escolha popular, então
+# elas estão incluídas aqui como exemplo. Modifique conforme necessário.
+
+# xss-lock impede a suspensão do logind e usará i3lock para bloquear a tela
+# antes de suspender. Use loginctl lock-session para bloquear sua tela.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# NetworkManager é a forma mais popular de gerenciar redes sem fio no Linux,
+# e nm-applet é uma interface gráfica de sistema tray independente do ambiente de desktop.
+exec --no-startup-id nm-applet
+
+##################################
+########## KEY BINDINGS ##########
+##################################
+
+# Use pactl para ajustar o volume no PulseAudio.
+# Define um comando para atualizar o i3status após mudar o volume
+set $refresh_i3status killall -SIGUSR1 i3status
+# Aumenta o volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+# Diminui o volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+# Muta o áudio
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+# Muta o microfone
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# Usar Mouse+$mod para arrastar janelas flutuantes para suas posições desejadas
+floating_modifier $mod
+
+# Mover janelas em mosaico via arrastar e soltar ao clicar com o botão esquerdo na barra de título,
+# ou clicando em qualquer lugar na janela enquanto mantém o modificador flutuante pressionado.
+tiling_drag modifier titlebar
+
+# Inicia um terminal
+bindsym $mod+Return exec alacritty
+
+# Fecha a janela focada
+bindsym $mod+q kill
+
+# Captura a tela
+bindsym $mod+tab xfce4-screenshooter
+
+# Inicia o dmenu (um lançador de programas)
+bindsym $mod+space exec rofi -show drun
+# Uma substituição mais moderna para o dmenu é o rofi:
+#bindcode $mod+40 exec "rofi -modi drun,run -show drun"
+# Também existe o i3-dmenu-desktop, que exibe apenas aplicativos que enviam um
+# arquivo .desktop. É um wrapper em torno do dmenu, então você precisa tê-lo instalado.
+# bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
+
+# Muda o foco
+#bindsym $mod+j focus left
+#bindsym $mod+k focus down
+#bindsym $mod+l focus up
+#bindsym $mod+semicolon focus right
+
+# Alternativamente, você pode usar as teclas de cursor:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move a janela focada
+#bindsym $mod+Shift+j move left
+#bindsym $mod+Shift+k move down
+#bindsym $mod+Shift+l move up
+#bindsym $mod+Shift+semicolon move right
+
+# Alternativamente, você pode usar as teclas de cursor:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Divide em orientação horizontal
+bindsym $mod+h split h
+
+# Divide em orientação vertical
+bindsym $mod+v split v
+
+# Entra no modo de tela cheia para o container focado
+bindsym $mod+f fullscreen toggle
+
+# Muda o layout do container (empilhado, tabulado, alternar divisão)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Alterna entre janelas em mosaico / flutuantes
+bindsym $mod+Shift+space floating toggle
+
+# Muda o foco entre janelas em mosaico / flutuantes
+#bindsym $mod+space focus mode_toggle
+
+# Foca o container pai
+bindsym $mod+a focus parent
+
+# Foca o container filho
+#bindsym $mod+d focus child
+
+# Define nomes para áreas de trabalho padrão para as quais configuramos as ligações de teclas mais tarde.
+# Usamos variáveis para evitar repetir os nomes em vários lugares.
+# Nomes das áreas de trabalho
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Troca para a área de trabalho
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace number $ws10
+
+# Move o container focado para a área de trabalho
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# Recarrega o arquivo de configuração
+bindsym $mod+Shift+c reload
+# Reinicia o i3 no lugar (preserva seu layout/sessão, pode ser usado para atualizar o i3)
+bindsym $mod+Shift+r restart
+# Sai do i3 (desloga da sua sessão X)
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Você pressionou o atalho de saída. Realmente deseja sair do i3? Isso encerrará sua sessão X.' -B 'Sim, sair do i3' 'i3-msg exit'"
+
+# Modo de redimensionamento de janelas (você também pode usar o mouse para isso)
+mode "resize" {
+        # Estas ligações acionam assim que você entra no modo de redimensionamento
+
+        # Pressionar para a esquerda irá reduzir a largura da janela.
+        # Pressionar para a direita irá aumentar a largura da janela.
+        # Pressionar para cima irá reduzir a altura da janela.
+        # Pressionar para baixo irá aumentar a altura da janela.
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+
+        # mesmas ligações, mas para as teclas de seta
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # voltar ao normal: Enter ou Escape ou $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+# Ativa o modo de redimensionamento
+bindsym $mod+r mode "resize"
+
+###################################
+############### BAR ###############
+###################################
+
+# Inicia o i3bar para exibir uma barra de área de trabalho (mais as informações do sistema que o i3status
+# obtém, se disponível)
+
+bar {
+    font pango:Inconsolata for Powerline 12
+    position top
+    tray_output none	
+    # Comando para mostrar status da barra com bumblebee-status
+    status_command ~/.config/i3/bumblebee-status/bumblebee-status \
+        -m amixer cpu memory datetime \
+        -p root.path=/ datetime.format="%d %b %Y, %a %H:%M" \
+        -t solarized-powerline
+
+# Se quiser personalizar as cores, descomente essa parte
+ colors{ 
+     background #111118
+     statusline #ffffff
+     separator  #bbbbbb
+
+     focused_workspace   #345e81 #345e81 #ffffff
+     active_workspace    #345e81 #345e81 #ffffff
+     inactive_workspace  #111118 #111118 #ffffff
+	}
+}
+##################################
+########## SCREENSHOT ############
+##################################
+
+# Captura de tela
+# Para capturas de tela, instale:
+# sudo pacman -S maim xclip copyq
+
+## Capturas de tela em arquivos
+#bindsym Print exec --no-startup-id maim --format=png "/home/$USER/Pictures/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-all.png"
+# Captura de tela da janela atual
+bindsym $mod+Print exec --no-startup-id maim --format=png --window $(xdotool getactivewindow) "/home/$USER/Pictures/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-current.png"
+# Captura de tela de uma seleção
+bindsym Shift+Print exec --no-startup-id maim --format=png --select "/home/$USER/Pictures/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-selected.png"
+
+## Capturas de tela na área de transferência
+bindsym Ctrl+Print exec --no-startup-id maim --format=png | xclip -selection clipboard -t image/png
+bindsym Ctrl+$mod+Print exec --no-startup-id maim --format=png --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+bindsym Print exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
+
+###################################
+############# BORDERS #############
+###################################
+
+# Define a largura da borda das janelas
+for_window [class="^.*"] border pixel 4
+new_window 1pixel
+client.focused #5c7e9a #5c7e9a #5c7e9a #5c7e9a #5c7e9a
+
+##################################
+############## GAPS ##############
+##################################
+
+# Define os espaços entre as janelas
+gaps inner 10
+gaps outer 0
+
+##################################
+############# START #############
+##################################
+
+# Executa aplicativos no início do i3
+#exec --no-startup-id xfce4-power-manager
+#exec --no-startuo-id guake
+exec --no-startup-id feh --bg-scale /home/glover/Imagens/wallpapers/wallpapers-master/Nature/0200.jpg
+exec xrandr --output LVDS-1 --off --output HDMI-1 --primary
+exec xautolock -time 10 -locker lock
+exec picom --config ~/.config/picom/picom.config
+exec redsifhtconf
+exec xrandr --output LVDS-1 --off --output VGA-1 --off --output HDMI-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --off
+#exec --no-startup-id volumeicon
+exec --no-startup-id numlockx on
+# Define o bloqueio de tela com i3lock e um pequeno atraso
+#set $Locker i3lock && sleep 1
+# Define a configurado para o layout ABNT2
+exec --no-startup-id setxkbmap -model abnt2 -layout br -variant abnt2
+
+
+# Define o modo do sistema com várias opções
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    # Comandos para cada opção do modo do sistema
+    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
+
+    # voltar ao normal: Enter ou Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# Atalho para ativar o modo do sistema
+bindsym $mod+shift+e mode "$mode_system"
